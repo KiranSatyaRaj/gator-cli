@@ -48,8 +48,9 @@ func Read() Config {
 	return config
 }
 
-func (config *Config) SetUser() {
-	config.CurrentUserName = os.Getenv("USER")
+func (config *Config) SetUser(name string) {
+	config.CurrentUserName = name
+
 	if err := write(*config); err != nil {
 		panic(err)
 	}
