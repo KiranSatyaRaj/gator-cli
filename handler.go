@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"html"
 	"log"
 	"os"
 	"time"
@@ -64,6 +65,21 @@ func handlerUsers(state *state, cmd command) error {
 		} else {
 			fmt.Println(user)
 		}
+	}
+	return nil
+}
+
+func handlerAgg(state *state, cmd command) error {
+	rssFeed, err := fetchFeed(context.Background(), "https://www.wagslane.dev/index.xml")
+	if err != nil {
+		return err
+	}
+	fmt.Println(html.UnescapeString(rssFeed.Channel.Title))
+	fmt.Println(html.UnescapeString(rssFeed.Channel.Description))
+	rssItem := rssFeed.Channel.Item
+	for _, item := range rssItem {
+		fmt.Println(html.UnescapeString(item.Title))
+		fmt.Println(html.UnescapeString(item.Description))
 	}
 	return nil
 }

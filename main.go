@@ -38,6 +38,8 @@ func main() {
 		cmds.register("reset", handlerReset)
 	case "users":
 		cmds.register("users", handlerUsers)
+	case "agg":
+		cmds.register("agg", handlerAgg)
 	}
 	if err := cmds.run(st, cmd); err != nil {
 		panic(err)
