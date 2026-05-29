@@ -83,3 +83,23 @@ func handlerAgg(state *state, cmd command) error {
 	}
 	return nil
 }
+
+func handlerAddFeed(state *state, cmd command) error {
+	if len(cmd.args) < 2 {
+		return errors.New("not enough args")
+	}
+	currentUser, err := state.db.GetUser(context.Background(), state.cfg.CurrentUserName)
+	feedArgs := database.CreateFeedParams{
+		Name:   cmd.args[0],
+		Url:    cmd.args[1],
+		UserID: currentUser.ID,
+	}
+
+	feed, err := state.db.CreateFeed(context.Background(), feedArgs)
+	if err != nil {
+		return err
+	}
+	fmt.Printf("Name of the feed: %s\n", feed.Name)
+	fmt.Printf("Url of the feed: %s\n", feed.Url)
+	return nil
+}
