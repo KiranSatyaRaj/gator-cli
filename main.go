@@ -42,6 +42,8 @@ func main() {
 		cmds.register("agg", handlerAgg)
 	case "addfeed":
 		cmds.register("addfeed", handlerAddFeed)
+	case "feeds":
+		cmds.register("feeds", handlerListFeeds)
 	}
 	if err := cmds.run(st, cmd); err != nil {
 		panic(err)
